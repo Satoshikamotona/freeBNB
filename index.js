@@ -138,8 +138,8 @@ attachEventToParticipateButton() {
 
 async CHeck() {
     try {
-      const userAddress = this.account;
-      const lastUpdateTimestamp = await this.getLastUpdateTimestamp(userAddress);
+      
+      const lastUpdateTimestamp = await this.getLastUpdateTimestamp();
 
       console.log(`la derniere mise a jour est ${lastUpdateTimestamp}`);
   
@@ -151,7 +151,7 @@ async CHeck() {
         // Recalcul des dividendes basés sur la différence de temps actuelle
         const dividends = timeDifferenceInSeconds * (0.0001 / 86400); // 0.0001 BNB par jour
            console.log(`Les dividends disponible sont de ${dividends}`)
-           
+
         document.getElementById('dividendsPerSecond').innerText = `${dividends.toFixed(10)} BNB`;
       };
   
@@ -166,11 +166,11 @@ async CHeck() {
   },
   
 
-  async getLastUpdateTimestamp(Useraddress) {
+  async getLastUpdateTimestamp() {
     try {
       const NoTime = 0;
-      const lastJoiningDate = await this.secondContract.methods.joiningTime(Useraddress).call();
-      const lastUpdate = await this.secondContract.methods.recenteFreeBNBTime(Useraddress).call();
+      const lastJoiningDate = await this.secondContract.methods.joiningTime(this.account).call();
+      const lastUpdate = await this.secondContract.methods.recenteFreeBNBTime(this.account).call();
       
       return lastUpdate === NoTime ? lastJoiningDate : lastUpdate;
     } catch (error) {
