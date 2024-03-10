@@ -1,17 +1,4 @@
 
-const Web3 = require('web3');
-const web3 = new Web3('http://localhost:7545');
-
-async function main() {
-    const accounts = await web3.eth.getAccounts();
-    console.log(accounts);
-}
-
-main().catch(console.error);
-
-
-main().catch(console.error);
-
 document.addEventListener("DOMContentLoaded", function() {
     const images = [" 1.png", "2.png", "3.png"]; // Chemin vers vos images
     let currentIndex = 0;
