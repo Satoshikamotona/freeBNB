@@ -136,25 +136,33 @@ attachEventToParticipateButton() {
     button.addEventListener('click', this.Participate.bind(this));
 },
 
-async CHeck() {
+async updateDividendes() {
     try {
-      const Useraddress = this.account;
-      const lastUpdateTimestamp = await this.getLastUpdateTimestamp(Useraddress);
-      const currentTimeStamp = Math.floor(Date.now() / 1000);
-      const timeDifferenceInSeconds = currentTimeStamp - lastUpdateTimestamp;
-      
-      // Mise à jour des dividendes initiaux basés sur la différence de temps
-      this.dividends = timeDifferenceInSeconds * (0.0001 / 86400); // 0.0001 BNB par jour
-      
-      // Mise à jour initiale des dividendes affichés
-      document.getElementById('dividendsPerSecond').innerText = `${this.dividends.toFixed(10)} BNB`;
-      
+      const userAddress = this.account;
+      const lastUpdateTimestamp = await this.getLastUpdateTimestamp(userAddress);
+  
+      // Fonction pour recalculer et mettre à jour les dividendes chaque seconde
+      const recalculateDividends = async () => {
+        const currentTimeStamp = Math.floor(Date.now() / 1000);
+        const timeDifferenceInSeconds = currentTimeStamp - lastUpdateTimestamp;
+        
+        // Recalcul des dividendes basés sur la différence de temps actuelle
+        const dividends = timeDifferenceInSeconds * (0.0001 / 86400); // 0.0001 BNB par jour
+        
+        // Mise à jour des dividendes affichés
+        document.getElementById('dividendsPerSecond').innerText = `${dividends.toFixed(10)} BNB`;
+      };
+  
+      // Mise à jour initiale des dividendes
+      await recalculateDividends();
+  
       // Mise à jour des dividendes chaque seconde
-      setInterval(() => this.updateDividends(), 1000);
+      setInterval(async () => await recalculateDividends(), 1000);
     } catch (error) {
       console.error('Error updating dividends:', error);
     }
   },
+  
 
   async getLastUpdateTimestamp(Useraddress) {
     try {
@@ -169,10 +177,7 @@ async CHeck() {
     }
   },
 
-  async updateDividends() {
-    this.dividends += (0.0001 / 86400);
-    document.getElementById('dividendsPerSecond').innerText = `${this.dividends.toFixed(10)} BNB`;
-  },
+  
     init: async function () {
         await this.connectContract();
         await this.connectSecondContract();
