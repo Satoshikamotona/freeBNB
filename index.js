@@ -136,7 +136,7 @@ attachEventToParticipateButton() {
     button.addEventListener('click', this.Participate.bind(this));
 },
 
-async updateDividendes() {
+async CHeck() {
     try {
       const userAddress = this.account;
       const lastUpdateTimestamp = await this.getLastUpdateTimestamp(userAddress);
