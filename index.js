@@ -177,7 +177,7 @@ async updateDividendes() {
         await this.connectContract();
         await this.connectSecondContract();
         await this.CheckUserState();
-        await this.UpdateDividendes();
+        await this.updateDividendes();
     
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         if (accounts.length === 0) {
