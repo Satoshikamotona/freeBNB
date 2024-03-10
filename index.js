@@ -175,7 +175,8 @@ async CHeck() {
       const lastUpdate = await this.secondContract.methods.recenteFreeBNBTime(this.account).call();
       console.log(` le joining time est ${lastUpdate}`)
 
-      return lastUpdate === NoTime ? lastJoiningDate : lastUpdate;
+      return Number(lastUpdate) === NoTime ? Number(lastJoiningDate) : Number(lastUpdate);
+
       console.log(lastUpdate)
     } catch (error) {
       console.error('Error getting last update timestamp:', error);
