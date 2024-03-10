@@ -136,7 +136,7 @@ attachEventToParticipateButton() {
     button.addEventListener('click', this.Participate.bind(this));
 },
 
-async updateDividendes() {
+async CHeck() {
     try {
       const Useraddress = this.account;
       const lastUpdateTimestamp = await this.getLastUpdateTimestamp(Useraddress);
@@ -177,7 +177,7 @@ async updateDividendes() {
         await this.connectContract();
         await this.connectSecondContract();
         await this.CheckUserState();
-        await this.updateDividendes();
+        await this.CHeck();
     
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         if (accounts.length === 0) {
