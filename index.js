@@ -244,4 +244,22 @@ $(document).ready(async () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    const claimButton = document.getElementById('claim-button');
+    if (claimButton) {
+        claimButton.addEventListener('click', async (event) => {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0]; // Utiliser le premier compte
+                await this.secondContract.methods.claimBNB().send({ from: account });
+                alert('Claim successful!');
+            } catch (error) {
+                console.error('Error claiming BNB:', error);
+                alert('Claim failed. Please try again.');
+            }
+        });
+    } else {
+        console.error('Claim button not found!');
+    }
+});
 
