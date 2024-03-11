@@ -186,7 +186,7 @@ async CHeck() {
 
   attachEventToClaimButton() {
     const claimButton = document.getElementById('claim-button');
-    if (!claimButton) {
+    if (!claim-button) {
         console.error('Claim button not found');
         return;
     }
