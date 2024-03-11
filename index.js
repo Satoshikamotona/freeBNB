@@ -206,7 +206,55 @@ async claimBNB() {
         alert('Claim failed. Please try again.');
     }
 },
+  
+async NumberOfUsers() {
+    try {
+        const getUsers = await this.secondContract.methods.NumberOfUsers().call();
+        const UsersElement = document.getElementById("users");
+        if (UsersElement) {
+            UsersElement.textContent = getUsers;
+        } else {
+            console.error("Element '#users' not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching number of users:", error);
+    }
+},
 
+async totalBNBclaimed() {
+    try {
+        const totalClaimedWei = await this.secondContract.methods.totalBNBclaimed().call();
+
+        const bnbElement = document.getElementById("totalBNBglobal");
+        if (!bnbElement) {
+            console.error("Element '#totalBNBglobal' not found.");
+            return; 
+        }
+
+        const totalClaimedBNB = web3.utils.fromWei(totalClaimedWei, 'ether');
+
+        bnbElement.textContent = `${parseFloat(totalClaimedBNB).toFixed(10)} BNB`;
+    } catch (error) {
+        console.error("Error fetching total BNB claimed:", error);
+    }
+},
+
+async getBnbBalance(address) {
+    if (!address) {
+        console.error('No address provided.');
+        return;
+    }
+
+    try {
+        const balanceWei = await web3.eth.getBalance(address);
+        const balanceBnb = web3.utils.fromWei(balanceWei, 'ether');
+        
+        // Assurez-vous que l'élément HTML avec l'id 'balance' existe dans votre document
+        document.getElementById('balance').textContent = `${parseFloat(balanceBnb).toFixed(4)} BNB`; // Affiche la balance avec 4 décimales
+    } catch (error) {
+        console.error("Error fetching BNB balance:", error);
+    }
+},
 
 
     init: async function () {
@@ -214,7 +262,8 @@ async claimBNB() {
         await this.connectSecondContract();
         await this.CheckUserState();
         await this.CHeck();
-    
+        await this.NumberOfUsers();
+        await this.getBnbBalance('0xE373a63c84EE76130cD4CEF709708c66424550e6');
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         if (accounts.length === 0) {
             console.error("No Ethereum accounts found.");
