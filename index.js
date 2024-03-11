@@ -85,7 +85,7 @@ connectSecondContract: async function () {
     
 
     
-     const SecContractAddress = "0x9Df02a5B6A5d303764Ee8E839c955d1F121d7E5d";
+     const SecContractAddress = "0xE373a63c84EE76130cD4CEF709708c66424550e6";
 
 try {
 this.secondContract = new web3.eth.Contract(SecContractABI, SecContractAddress);
@@ -193,11 +193,17 @@ async CHeck() {
     claimButton.addEventListener('click', () => this.claimBNB());
 },
 
+Clam() {
+    const button = document.getElementById('claim');
+    // Assurez-vous de ne pas ajouter plusieurs fois le même écouteur d'événements
+    button.removeEventListener('click', this.claimBNB.bind(this));
+    button.addEventListener('click', this.claimBNB.bind(this));
+},
+
 async claimBNB() {
     try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0]; // Utiliser le premier compte
-        await this.secondContract.methods.claimBNB().send({ from: account });
+    
+        await this.secondContract.methods.claimBNB().send({ from: this.account });
         alert('Claim successful!');
     } catch (error) {
         console.error('Error claiming BNB:', error);
