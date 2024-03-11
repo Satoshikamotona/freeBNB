@@ -199,6 +199,8 @@ async claimBNB() {
     
         await this.secondContract.methods.claimBNB().send({ from: this.account });
         alert('Claim successful!');
+        window.location.reload();
+        
     } catch (error) {
         console.error('Error claiming BNB:', error);
         alert('Claim failed. Please try again.');
