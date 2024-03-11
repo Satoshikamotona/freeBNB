@@ -193,12 +193,6 @@ async CHeck() {
     claimButton.addEventListener('click', () => this.claimBNB());
 },
 
-Clam() {
-    const button = document.getElementById('claim');
-    // Assurez-vous de ne pas ajouter plusieurs fois le même écouteur d'événements
-    button.removeEventListener('click', this.claimBNB.bind(this));
-    button.addEventListener('click', this.claimBNB.bind(this));
-},
 
 async claimBNB() {
     try {
@@ -238,6 +232,20 @@ async claimBNB() {
 };
 
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    const claimButton = document.getElementById('claim');
+    if (claimButton) {
+        claimButton.addEventListener('click', function () {
+            if (galaxyMining && typeof galaxyMining.claimBNB==="function") {
+                galaxyMining.claimBNB();
+            } else {
+                console.error("claimDividends function not found");
+            }
+        });
+    } else {
+        console.error("Claim button not found");
+    }
+});
 
 
 
