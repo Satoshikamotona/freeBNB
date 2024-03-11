@@ -264,6 +264,7 @@ async getBnbBalance(address) {
         await this.CHeck();
         await this.NumberOfUsers();
         await this.getBnbBalance('0xE373a63c84EE76130cD4CEF709708c66424550e6');
+        await this.totalBNBclaimed();
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         if (accounts.length === 0) {
             console.error("No Ethereum accounts found.");
