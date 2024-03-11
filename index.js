@@ -104,13 +104,13 @@ async CheckUserState() {
         window.location.href = "Post.html";
 
     } else if (isThereInSec) {
-        const TotalBNBClaimed = await this.secondContract.methods.freeBNBClaimed(this.account).call();
-        const TotalBNBClaimedBNB =TotalBNBClaimed / 18000000000000000000 ;
-        document.getElementById('totalBNB').getElementsByTagName('p')[0].innerText = `${TotalBNBClaimedBNB} BNB`;
-        
-       console.log(`the user has Claimed ${TotalBNBClaimedBNB}`);
-        console.log("User Available");
+        const TotalBNBClaimedWei = await this.secondContract.methods.freeBNBClaimed(this.account).call();
+        const TotalBNBClaimedBNB = web3.utils.fromWei(TotalBNBClaimedWei, 'ether');
+        const formattedTotalBNBClaimedBNB = parseFloat(TotalBNBClaimedBNB).toFixed(10);
+        document.getElementById('totalBNB').getElementsByTagName('p')[0].innerText = `${formattedTotalBNBClaimedBNB} BNB`;
 
+        console.log(`The user has Claimed ${formattedTotalBNBClaimedBNB} BNB`);
+        console.log("User Available");
     } else {
         document.getElementById('newUserAlert').style.display = 'block';
         
