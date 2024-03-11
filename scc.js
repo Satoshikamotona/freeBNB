@@ -185,7 +185,7 @@ async CHeck() {
   },
 
   attachEventToClaimButton() {
-    const claimButton = document.getElementById('claimButton');
+    const claimButton = document.getElementById('claim-button');
     if (!claimButton) {
         console.error('Claim button not found');
         return;
@@ -240,26 +240,6 @@ $(document).ready(async () => {
         await galaxyMining.init();
     } catch (error) {
         console.error("Error in Ethereum interaction:", error);
-    }
-});
-
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    const claimButton = document.getElementById('claim-button');
-    if (claimButton) {
-        claimButton.addEventListener('click', async (event) => {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                const account = accounts[0]; // Utiliser le premier compte
-                await this.secondContract.methods.claimBNB().send({ from: account });
-                alert('Claim successful!');
-            } catch (error) {
-                console.error('Error claiming BNB:', error);
-                alert('Claim failed. Please try again.');
-            }
-        });
-    } else {
-        console.error('Claim button not found!');
     }
 });
 
